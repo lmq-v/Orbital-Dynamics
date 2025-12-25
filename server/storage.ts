@@ -1,37 +1,65 @@
-import { type User, type InsertUser } from "@shared/schema";
 import { randomUUID } from "crypto";
 
-// modify the interface with any CRUD methods
-// you might need
+export interface StoredPreset {
+  id: string;
+  name: string;
+  description: string;
+  bodies: {
+    position: { x: number; y: number };
+    velocity: { x: number; y: number };
+    mass: number;
+    radius: number;
+    color: string;
+  }[];
+  G?: number;
+  dt?: number;
+}
+
+export interface InsertPreset {
+  name: string;
+  description: string;
+  bodies: {
+    position: { x: number; y: number };
+    velocity: { x: number; y: number };
+    mass: number;
+    radius: number;
+    color: string;
+  }[];
+  G?: number;
+  dt?: number;
+}
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  getPresets(): Promise<StoredPreset[]>;
+  getPreset(id: string): Promise<StoredPreset | undefined>;
+  createPreset(preset: InsertPreset): Promise<StoredPreset>;
+  deletePreset(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<string, User>;
+  private presets: Map<string, StoredPreset>;
 
   constructor() {
-    this.users = new Map();
+    this.presets = new Map();
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async getPresets(): Promise<StoredPreset[]> {
+    return Array.from(this.presets.values());
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getPreset(id: string): Promise<StoredPreset | undefined> {
+    return this.presets.get(id);
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
+  async createPreset(insertPreset: InsertPreset): Promise<StoredPreset> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+    const preset: StoredPreset = { ...insertPreset, id };
+    this.presets.set(id, preset);
+    return preset;
+  }
+
+  async deletePreset(id: string): Promise<boolean> {
+    return this.presets.delete(id);
   }
 }
 
