@@ -78,7 +78,7 @@ export function ControlPanel({
             {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           </Button>
           <Button
-            variant="secondary"
+            variant="outline"
             size="icon"
             onClick={onStep}
             disabled={isPlaying}
@@ -87,7 +87,7 @@ export function ControlPanel({
             <SkipForward className="h-4 w-4" />
           </Button>
           <Button
-            variant="secondary"
+            variant="outline"
             size="icon"
             onClick={onReset}
             data-testid="button-reset"
