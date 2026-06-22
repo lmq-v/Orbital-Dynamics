@@ -1,1 +1,7 @@
-This project is a simulation of n-body dynamics
+N-Body Simulation Web AppAn interactive, high-performance N-Body Simulation built for the browser. This application simulates the gravitational interactions between multiple celestial bodies in real-time, allowing users to experiment with orbital mechanics, stellar collisions, and chaotic multi-body systems.
+
+FeaturesReal-Time Physics: Uses Barnes-Hut or direct $O(n^2)$ summation for gravitational force calculations.Interactive Control: Click and drag to spawn bodies with custom mass, velocity, and vector trajectories.Visualizations: Tail trails, velocity vectors, and heatmaps for high-density clusters.Preset Scenarios: Instant access to classic setups like the Earth-Moon system, Lagrange points, stable binary stars, and chaotic three-body problems.Customization: Adjust the gravitational constant ($G$), time step ($\Delta t$), softening factor (to prevent infinite force during close collisions), and particle counts on the fly.
+
+Tech StackFrontend: HTML5 Canvas, CSS3, JavaScript (ES6+) / TypeScriptPhysics Engine: Custom WebGL or Web Workers implementation for multi-threaded performance.Bundler: Vite / Webpack
+
+The Physics Behind ItThe core simulation calculates the gravitational force exerted on body $i$ by all other bodies $j$ using Newton's law of universal gravitation:$$F_i = G \sum_{j \neq i} \frac{m_i m_j (r_j - r_i)}{(|r_j - r_i|^2 + \epsilon^2)^{3/2}}$$Where:$G$ is the gravitational constant.$m$ represents the mass of the bodies.$r$ represents their position vectors.$\epsilon$ is a small softening factor used to prevent mathematical singularities (infinite force) when two particles get infinitely close to each other.
